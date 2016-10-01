@@ -32,7 +32,13 @@ def heur_manhattan_distance(state):
     #When calculating distances, assume there are no obstacles on the grid and that several boxes can fit in one storage bin.
     #You should implement this heuristic function exactly, even if it is tempting to improve it.
     #Your function should return a numeric value; this is the estimate of the distance to the goal.
-    return 0
+    result = 0
+    for box in state.boxes:
+      tmp_dist = []
+      for store in state.storage:
+        tmp_dist.append(abs(box[0] - store[0]) + abs(box[1]-store[1]))
+      result += min(tmp_dist)
+    return result
 
 def heur_alternate(state):
 #IMPLEMENT
@@ -42,7 +48,24 @@ def heur_alternate(state):
     #heur_min_moves has flaws.   
     #Write a heuristic function that improves upon heur_manhattan_distance to estimate distance between the current state and the goal.
     #Your function should return a numeric value for the estimate of the distance to the goal.
-    return 0
+    #result = 0
+    #for box in state.boxes:
+      #tmp_dist = []
+      #for store in state.storage:
+        #robot_box_l = []
+        #for robot in state.robots:
+          #robot_box_l.append(abs(box[0] - robot[0]) + abs(box[1]-robot[1]))
+          #tmp_dist.append(abs(box[0] - store[0]) + abs(box[1]-store[1])+ min(robot_box_l))
+      #result += min(tmp_dist)
+      
+    #return result 
+    result = 0
+    for box in state.boxes:
+      tmp_dist = []
+      for store in state.storage:
+        tmp_dist.append(abs(box[0] - store[0]) + abs(box[1]-store[1]))
+      result += min(tmp_dist)
+    return result    
 
 def fval_function(state, weight):
 #IMPLEMENT
