@@ -6,6 +6,7 @@ from solution import *
 test_manhattan = False
 test_alternate_heuristic = True
 test_weighted_astar = False
+test_fval_function = False
 
 if test_manhattan:
     ##############################################################
@@ -20,13 +21,14 @@ if test_manhattan:
     solved = 0; unsolved = []
 
     for i in range(0,40):
+        print("PROBLEM {}".format(i))
 
         s0 = PROBLEMS[i]
-        #To see state
-        print(s0.state_string())
 
         man_dist = heur_manhattan_distance(s0)
-        print(man_dist)
+        print('calculated man_dist:', str(man_dist))
+        #To see state
+        print(s0.state_string())
 
         if man_dist == correct_man_dist[i]:
             solved += 1
@@ -102,7 +104,7 @@ if test_alternate_heuristic:
 
 if test_weighted_astar:
 
-  len_benchmark = [18, 13, 4, 10, 21, 9, 10, 5, 8, 18, -99, -99, 16, 11, 41, 14, 14, 14, -99, -99, 37, -99, 40, -99, -99, 3, 33, 29, 29, 18, -99, -99, -99, 81, -99, -99, -99, -99, -99, -99]
+  len_benchmark = [16, 13, 4, 10, 21, 9, 10, 5, 8, 18, -99, -99, 16, 11, 41, 14, 14, 14, -99, -99, 37, -99, 38, -99, -99, 33, 33, 29, 29, 18, -99, -99, -99, 81, -99, -99, -99, -99, -99, -99]
 
   ##############################################################
   # TEST ANYTIME WEIGHTED A STAR
@@ -129,6 +131,36 @@ if test_weighted_astar:
   print("Of the {} problems that were solved, the cost of {} matched or outperformed the benchmark.".format(solved, benchmark))  
   print("Problems that remain unsolved in the set are Problems: {}".format(unsolved))  
   print("The benchmark implementation solved 24 out of the 40 practice problems given 8 seconds.")  
+  print("*************************************\n") 
+  ##############################################################
+
+
+if test_fval_function:
+
+  test_state = SokobanState("START", 6, None, None, None, None, None, None, None)
+
+  correct_fvals = [6, 8, 10]
+
+  ##############################################################
+  # TEST fval_function
+  print("*************************************") 
+  print('Testing fval_function')
+
+  solved = 0
+  weights = [0., .5, 1.]
+  for i in range(len(weights)):
+
+    test_node = sNode(test_state, hval=10, fval_function=fval_function, weight=weights[i])
+
+    fval = fval_function(test_node, weights[i])
+    print ('Test', str(i), 'calculated fval:', str(fval), 'correct:', str(correct_fvals[i]))
+    
+    if fval == correct_fvals[i]:
+      solved +=1  
+
+
+  print("\n*************************************")  
+  print("Your fval_function calculated the correct fval for {} out of {} tests.".format(solved, len(correct_fvals)))  
   print("*************************************\n") 
   ##############################################################
 

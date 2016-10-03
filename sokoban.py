@@ -31,15 +31,7 @@ class SokobanState(StateSpace):
         self.robots = robots
         self.boxes = boxes
         self.storage = storage
-        self.obstacles = obstacles
-
-    def __cmp__(self, other):
-        '''
-        This comparison method must be implemented to ensure deterministic results.
-        @return: Negative if self < other, zero if self == other and strictly 
-        positive if self > other.
-        '''
-        return cmp((self.robots, self.boxes), (other.robots, other.boxes))        
+        self.obstacles = obstacles    
 
     def successors(self):
         '''
@@ -418,14 +410,6 @@ class Direction():
         '''
         self.name = name
         self.delta = delta
-    
-    def __cmp__(self, other):
-        '''
-        The comparison method must be implemented to ensure deterministic results.
-        @return: Negative if self < other, zero if self == other and strictly 
-        positive if self > other.
-        '''
-        return cmp(self.name, other.name)
     
     def __hash__(self):
         '''
