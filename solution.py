@@ -80,7 +80,7 @@ def heur_alternate(state):
    
     return result 
 
-def fval_function(state, weight):
+def fval_function(sNode, weight):
 #IMPLEMENT
     """
     Provide a custom formula for f-value computation for Anytime Weighted A star.
@@ -97,14 +97,27 @@ def fval_function(state, weight):
     #The function must return a numeric f-value.
     #The value will determine your state's position on the Frontier list during a 'custom' search.
     #You must initialize your search engine object as a 'custom' search engine if you supply a custom fval function.
-    return 0
+    return (1 - weight) * sNode.gval + weight * sNode.hval 
 
-def weighted_astar(initail_state, timebound = 10):
+def weighted_astar(initial_state, timebound = 10):
 #IMPLEMENT
     '''Provides an implementation of weighted a-star, as described in the HW1 handout'''
     '''INPUT: a sokoban state that represents the start state and a timebound (number of seconds)'''
-    '''OUTPUT: A goal state (if a goal is found), else False''' 
-    return False
+    '''OUTPUT: A goal state (if a goal is found), else False'''
+    se = SearchEngine('custom', 'full')
+    found_solution = False
+    for x in range(10,0,-1):
+      weight = x*0.1
+      final = se.search(initState=initial_state, heur_fn=heur_alternate, timebound=timebound, fval_function = fval_function, weight = weight, goal_fn=sokoban_goal_state)
+      if final:
+        found_solution = True
+        solution = final
+      if final==False and found_solution:
+        return solution
+    if found_solution:
+      return solution
+    else:
+      return False 
 
 #Munkres class to perform the Hungarian Algorithm
 class Munkres:
@@ -515,38 +528,6 @@ def make_cost_matrix(profit_matrix, inversion_function):
           cost_matrix.append([inversion_function(value) for value in row])
       return cost_matrix
   
-#def print_matrix(matrix, msg=None):
-      #"""
-      #Convenience function: Displays the contents of a matrix of integers.
-  
-      #:Parameters:
-          #matrix : list of lists
-              #Matrix to print
-  
-          #msg : str
-              #Optional message to print before displaying the matrix
-      #"""
-      #import math
-  
-      #if msg is not None:
-        #print msg
-  
-      ## Calculate the appropriate format width.
-      #width = 0
-      #for row in matrix:
-          #for val in row:
-              #width = max(width, int(math.log10(val)) + 1)
-  
-      ## Make the format string
-      #format = '%%%dd' % width
-  
-      ## Print the matrix
-      #for row in matrix:
-          #sep = '['
-          #for val in row:
-              #sys.stdout.write(sep + format % val)
-              #sep = ', '
-          #sys.stdout.write(']\n')
 
 if __name__ == "__main__":
   #TEST CODE
