@@ -19,7 +19,7 @@ def heur_displaced(state):
   for box in state.boxes:
     if box not in state.storage:
       count += 1
-    return count
+  return count
 
 def heur_manhattan_distance(state):
 #IMPLEMENT
@@ -48,14 +48,22 @@ def heur_alternate(state):
     #heur_min_moves has flaws.   
     #Write a heuristic function that improves upon heur_manhattan_distance to estimate distance between the current state and the goal.
     #Your function should return a numeric value for the estimate of the distance to the goal.
-    #result = 0
+    
     #for box in state.boxes:
-      #tmp_dist = []
-      #for robot in state.robots:
-          #tmp_dist.append(abs(box[0] - robot[0]) + abs(box[1]-robot[1]))
-      #result += min(tmp_dist)
-      
-    #return result + heur_manhattan_distance(state)
+      ##box in bottom left corner
+      #if (box[0]==0) and (box[1]==0):
+        #return 99999
+      ##box in top right corner
+      #elif (box[0] == state.width-1) and (box[1]==state.height-1):
+        #return 99999
+      ##box in bottom right corner
+      #elif (box[0] == state.width-1) and (box[1] == 0):
+        #return 99999
+      ##box in top left corner
+      #elif (box[0]==0) and (box[1] == state.height-1):
+        #return 99999
+        
+    
     result = 0
     m = Munkres()
     matrix = []
@@ -66,13 +74,11 @@ def heur_alternate(state):
         matrix.append(tmp_dist)
         
     indexes = m.compute(matrix)
-    
     for row, column in indexes:
       x = matrix[row][column]
       result += x
-    
-    return result
-    
+   
+    return result 
 
 def fval_function(state, weight):
 #IMPLEMENT
