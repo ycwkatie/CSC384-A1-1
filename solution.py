@@ -10,6 +10,8 @@
 from search import * #for search engines
 from sokoban import SokobanState, Direction, PROBLEMS, sokoban_goal_state #for Sokoban specific classes and problems
 
+import timeit
+
 #SOKOBAN HEURISTICS
 def heur_displaced(state):
   '''trivial admissible sokoban heuristic'''
@@ -106,9 +108,13 @@ def weighted_astar(initial_state, timebound = 10):
     '''OUTPUT: A goal state (if a goal is found), else False'''
     se = SearchEngine('custom', 'full')
     found_solution = False
+    time = timebound
     for x in range(10,0,-1):
       weight = x*0.1
-      final = se.search(initState=initial_state, heur_fn=heur_alternate, timebound=timebound, fval_function = fval_function, weight = weight, goal_fn=sokoban_goal_state)
+      start = timeit.default_timer()
+      final = se.search(initState=initial_state, heur_fn=heur_alternate, timebound=time, fval_function = fval_function, weight = weight, goal_fn=sokoban_goal_state)
+      stop = timeit.default_timer()
+      time = time - (stop - start)
       if final:
         found_solution = True
         solution = final
