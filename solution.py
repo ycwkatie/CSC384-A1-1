@@ -50,21 +50,7 @@ def heur_alternate(state):
     #heur_min_moves has flaws.   
     #Write a heuristic function that improves upon heur_manhattan_distance to estimate distance between the current state and the goal.
     #Your function should return a numeric value for the estimate of the distance to the goal.
-    
-    #for box in state.boxes:
-      ##box in bottom left corner
-      #if (box[0]==0) and (box[1]==0):
-        #return 99999
-      ##box in top right corner
-      #elif (box[0] == state.width-1) and (box[1]==state.height-1):
-        #return 99999
-      ##box in bottom right corner
-      #elif (box[0] == state.width-1) and (box[1] == 0):
-        #return 99999
-      ##box in top left corner
-      #elif (box[0]==0) and (box[1] == state.height-1):
-        #return 99999
-        
+    '''Function Description: In contrast to the heur_manhattan function, this function assigns each box to a storage using the Hungarian algorithm. The assignment ensures that each box is assigned to a unique storage in such away that it minimizes the sum of manhattan distance from each box to its assigned goal. '''       
     
     result = 0
     m = Munkres()
@@ -118,14 +104,15 @@ def weighted_astar(initial_state, timebound = 10):
       if final:
         found_solution = True
         solution = final
-      if final==False and found_solution:
-        return solution
+      #return previous solution if there exists 1 since weighted_astar couldn't find a solution with the current weight
+      #if final==False and found_solution:
+        #return solution
     if found_solution:
       return solution
     else:
       return False 
 
-#Munkres class to perform the Hungarian Algorithm
+#Munkres class to perform the Hungarian Algorithm imported from the munkres 1.0.8 package at https://pypi.python.org/pypi/munkres/
 class Munkres:
       """
       Calculate the Munkres solution to the classical assignment problem.
