@@ -104,9 +104,6 @@ def weighted_astar(initial_state, timebound = 10):
       if final:
         found_solution = True
         solution = final
-      #return previous solution if there exists 1 since weighted_astar couldn't find a solution with the current weight
-      #if final==False and found_solution:
-        #return solution
     if found_solution:
       return solution
     else:

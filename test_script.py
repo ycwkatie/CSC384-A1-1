@@ -3,8 +3,8 @@
 from solution import *
 
 #Select what to test
-test_manhattan = True
-test_alternate_heuristic = True
+test_manhattan = False
+test_alternate_heuristic = False
 test_weighted_astar = True
 test_fval_function = True
 
